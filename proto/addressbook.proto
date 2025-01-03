@@ -2,7 +2,7 @@ syntax = "proto3";
 package learning;
 
 import "google/protobuf/timestamp.proto";
-option go_package = "github.com/unicom-jf/learning-protobuf/learningpb
+option go_package = "github.com/unicom-jf/learning-protobuf/learningpb";
 
 message Person {
   string name = 1;
