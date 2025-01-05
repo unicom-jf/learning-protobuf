@@ -1,14 +1,7 @@
 <template>
   <v-container class="fill-height">
-    <v-responsive
-      class="align-centerfill-height mx-auto"
-      max-width="900"
-    >
-      <v-img
-        class="mb-4"
-        height="150"
-        src="@/assets/logo.png"
-      />
+    <v-responsive class="align-centerfill-height mx-auto" max-width="900">
+      <v-img class="mb-4" height="150" src="@/assets/logo.png" />
 
       <div class="text-center">
         <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
@@ -38,7 +31,9 @@
 
             <template #subtitle>
               <div class="text-subtitle-1">
-                Replace this page by removing <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in <v-kbd>pages/index.vue</v-kbd>.
+                Replace this page by removing
+                <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in
+                <v-kbd>pages/index.vue</v-kbd>.
               </div>
             </template>
 
@@ -153,5 +148,48 @@
 </template>
 
 <script setup lang="ts">
-  //
+import { ref, onMounted } from "vue";
+
+import * as nats_core from "@nats-io/nats-core";
+//console.log(nats_core);
+//console.log(nc);
+// reactive state
+const count = ref(0);
+onMounted(async () => {
+  try {
+    const nc = await nats_core.wsconnect({ servers: ["ws://127.0.0.1:9222"] });
+    console.log("ws connected.");
+    //nats_core.
+    /*
+  const status = nc.status();
+  console.log("status: ", status);
+  */
+    const done = nc.closed();
+    //run business
+    const sub = nc.subscribe("hello");
+    (async () => {
+      for await (const m of sub) {
+        console.log(`[${sub.getProcessed()}]: ${m.string()}`);
+      }
+      console.log("subscription closed");
+    })();
+
+    nc.publish("hello", "world");
+    nc.publish("hello", "again");
+
+    await nc.drain();
+    nc.close();
+    // check if the close was OK
+    const err = await done;
+    if (err) {
+      console.log(`error closing:`, err);
+    } else {
+      console.log("ws closed.");
+    }
+  } catch (err) {
+    console.log("catch err: ", err);
+  }
+
+  console.log(`The initial count is ${count.value}.`);
+});
 </script>
