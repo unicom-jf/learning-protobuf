@@ -30,3 +30,14 @@ enum PhoneType {
 message AddressBook {
   repeated Person people = 1;
 }
+
+message Empty {}
+
+message ServiceResult {
+  string info = 1;
+  int32 error_id = 2;  // 0 for no error
+}
+service AddressBookService {
+    rpc saveBook (AddressBook) returns (ServiceResult);
+    rpc GetBook (Empty) returns (AddressBook);
+}

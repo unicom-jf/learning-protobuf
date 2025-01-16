@@ -2,8 +2,8 @@
 // @generated from file addressbook.proto (package learning, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
+import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file addressbook.proto.
  */
 export const file_addressbook: GenFile = /*@__PURE__*/
-  fileDesc("ChFhZGRyZXNzYm9vay5wcm90bxIIbGVhcm5pbmci0wEKBlBlcnNvbhIMCgRuYW1lGAEgASgJEgoKAmlkGAIgASgFEg0KBWVtYWlsGAMgASgJEiwKBnBob25lcxgEIAMoCzIcLmxlYXJuaW5nLlBlcnNvbi5QaG9uZU51bWJlchIwCgxsYXN0X3VwZGF0ZWQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wGkAKC1Bob25lTnVtYmVyEg4KBm51bWJlchgBIAEoCRIhCgR0eXBlGAIgASgOMhMubGVhcm5pbmcuUGhvbmVUeXBlIi8KC0FkZHJlc3NCb29rEiAKBnBlb3BsZRgBIAMoCzIQLmxlYXJuaW5nLlBlcnNvbipoCglQaG9uZVR5cGUSGgoWUEhPTkVfVFlQRV9VTlNQRUNJRklFRBAAEhUKEVBIT05FX1RZUEVfTU9CSUxFEAESEwoPUEhPTkVfVFlQRV9IT01FEAISEwoPUEhPTkVfVFlQRV9XT1JLEANCA1oBLmIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChFhZGRyZXNzYm9vay5wcm90bxIIbGVhcm5pbmci0wEKBlBlcnNvbhIMCgRuYW1lGAEgASgJEgoKAmlkGAIgASgFEg0KBWVtYWlsGAMgASgJEiwKBnBob25lcxgEIAMoCzIcLmxlYXJuaW5nLlBlcnNvbi5QaG9uZU51bWJlchIwCgxsYXN0X3VwZGF0ZWQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wGkAKC1Bob25lTnVtYmVyEg4KBm51bWJlchgBIAEoCRIhCgR0eXBlGAIgASgOMhMubGVhcm5pbmcuUGhvbmVUeXBlIi8KC0FkZHJlc3NCb29rEiAKBnBlb3BsZRgBIAMoCzIQLmxlYXJuaW5nLlBlcnNvbiIHCgVFbXB0eSIvCg1TZXJ2aWNlUmVzdWx0EgwKBGluZm8YASABKAkSEAoIZXJyb3JfaWQYAiABKAUqaAoJUGhvbmVUeXBlEhoKFlBIT05FX1RZUEVfVU5TUEVDSUZJRUQQABIVChFQSE9ORV9UWVBFX01PQklMRRABEhMKD1BIT05FX1RZUEVfSE9NRRACEhMKD1BIT05FX1RZUEVfV09SSxADMoMBChJBZGRyZXNzQm9va1NlcnZpY2USOgoIc2F2ZUJvb2sSFS5sZWFybmluZy5BZGRyZXNzQm9vaxoXLmxlYXJuaW5nLlNlcnZpY2VSZXN1bHQSMQoHR2V0Qm9vaxIPLmxlYXJuaW5nLkVtcHR5GhUubGVhcm5pbmcuQWRkcmVzc0Jvb2tCA1oBLmIGcHJvdG8z", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message learning.Person
@@ -95,6 +95,43 @@ export const AddressBookSchema: GenMessage<AddressBook> = /*@__PURE__*/
   messageDesc(file_addressbook, 1);
 
 /**
+ * @generated from message learning.Empty
+ */
+export type Empty = Message<"learning.Empty"> & {
+};
+
+/**
+ * Describes the message learning.Empty.
+ * Use `create(EmptySchema)` to create a new message.
+ */
+export const EmptySchema: GenMessage<Empty> = /*@__PURE__*/
+  messageDesc(file_addressbook, 2);
+
+/**
+ * @generated from message learning.ServiceResult
+ */
+export type ServiceResult = Message<"learning.ServiceResult"> & {
+  /**
+   * @generated from field: string info = 1;
+   */
+  info: string;
+
+  /**
+   * 0 for no error
+   *
+   * @generated from field: int32 error_id = 2;
+   */
+  errorId: number;
+};
+
+/**
+ * Describes the message learning.ServiceResult.
+ * Use `create(ServiceResultSchema)` to create a new message.
+ */
+export const ServiceResultSchema: GenMessage<ServiceResult> = /*@__PURE__*/
+  messageDesc(file_addressbook, 3);
+
+/**
  * @generated from enum learning.PhoneType
  */
 export enum PhoneType {
@@ -124,4 +161,27 @@ export enum PhoneType {
  */
 export const PhoneTypeSchema: GenEnum<PhoneType> = /*@__PURE__*/
   enumDesc(file_addressbook, 0);
+
+/**
+ * @generated from service learning.AddressBookService
+ */
+export const AddressBookService: GenService<{
+  /**
+   * @generated from rpc learning.AddressBookService.saveBook
+   */
+  saveBook: {
+    methodKind: "unary";
+    input: typeof AddressBookSchema;
+    output: typeof ServiceResultSchema;
+  },
+  /**
+   * @generated from rpc learning.AddressBookService.GetBook
+   */
+  getBook: {
+    methodKind: "unary";
+    input: typeof EmptySchema;
+    output: typeof AddressBookSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_addressbook, 0);
 

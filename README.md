@@ -9,3 +9,8 @@ Frontend talks to backend using protobuf message with websocket.
 Running in backend directory:
 protoc -I=../proto --go_out=./learningpb ../proto/addressbook.proto
 protoc --proto_path=../proto --go_out=./learningpb ../proto/addressbook.proto
+
+front end:
+
+using buf.gen.yaml
+npx buf generate

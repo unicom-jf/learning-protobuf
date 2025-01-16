@@ -56,13 +56,13 @@
             prepend-icon="mdi-text-box-outline"
             rel="noopener noreferrer"
             rounded="lg"
+            title="title of docs  param"
             subtitle="Learn about all things Vuetify in our documentation."
             target="_blank"
-            title="Documentation"
             variant="text"
           >
             <v-overlay
-              opacity=".06"
+              opacity=".16"
               scrim="primary"
               contained
               model-value
@@ -151,6 +151,8 @@
 import { ref, onMounted } from "vue";
 
 import * as nats_core from "@nats-io/nats-core";
+import { create, fromBinary, isMessage, toJson } from "@bufbuild/protobuf";
+import * as pb from "@/learningpb/addressbook_pb";
 //console.log(nats_core);
 //console.log(nc);
 // reactive state
@@ -159,21 +161,24 @@ onMounted(async () => {
   try {
     const nc = await nats_core.wsconnect({ servers: ["ws://127.0.0.1:9222"] });
     console.log("ws connected.");
-    //nats_core.
-    /*
-  const status = nc.status();
-  console.log("status: ", status);
-  */
     const done = nc.closed();
     //run business
     const sub = nc.subscribe("hello");
     (async () => {
       for await (const m of sub) {
-        console.log(`[${sub.getProcessed()}]: ${m.string()}`);
+        //const msg: unknown = create(pb.AddressBookSchema);
+        const msg = fromBinary(pb.AddressBookSchema, m.data);
+        if (isMessage(msg, pb.AddressBookSchema)) {
+          const json = toJson(pb.AddressBookSchema, msg);
+          console.log(`[${sub.getProcessed()}]: `, msg);
+          console.log("json: ", JSON.stringify(json));
+        } else {
+          console.log(`[${sub.getProcessed()}]: ${m.string()}`);
+        }
       }
       console.log("subscription closed");
     })();
-
+    /*
     nc.publish("hello", "world");
     nc.publish("hello", "again");
 
@@ -186,10 +191,20 @@ onMounted(async () => {
     } else {
       console.log("ws closed.");
     }
+      */
   } catch (err) {
     console.log("catch err: ", err);
   }
 
-  console.log(`The initial count is ${count.value}.`);
+  const person: pb.Person = create(pb.PersonSchema, {
+    name: "sunny",
+    id: 1,
+    email: "sam@ever73.com",
+  });
+  const book: pb.AddressBook = create(pb.AddressBookSchema, {
+    people: [person],
+  });
+
+  console.log(`The initial count is ${count.value}.`, book);
 });
 </script>
